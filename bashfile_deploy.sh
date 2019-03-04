@@ -31,8 +31,14 @@ fi
     echo coppy files
     scp intelli-vu/target/intelli-vu.war /usr/share/tomcat/webapps
     scp intelli-vu-event/target/intelli-vu-event.war .ssh hnguyen2@usla-ivev-q001.qa.vubiquity.com:./
-
+    ssh hnguyen2@usla-ivev-q001.qa.vubiquity.com <<-'ENDSSH'
+    sudo -s
+    scp intelli-vu-event.war /usr/share/tomcat/webapps
     cd /usr/share/tomcat/bin
     killall java
-    ./startup.sh
-    tail -f ../logs/catalila.out
+    ./startup.sh & sleep 20
+    ENDSSH
+    cd /usr/share/tomcat/bin
+    killall java
+    ./startup.sh 
+    tail -f ../logs/catalina.out
